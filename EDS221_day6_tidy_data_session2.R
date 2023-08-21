@@ -99,4 +99,23 @@ pie_crab_group_mutate <- pie_crab %>%
   group_by(site) %>%
   mutate(mean_size = mean(size, na.rm = TRUE))
 
+# group_by multiple columns + summarize
 
+penguins %>%
+  group_by(species,island, year) %>%
+  summarise(mean_body_mass = mean(body_mass_g, na.rm = TRUE))
+
+# Use dyplr::case_when() to write if-else statements more easily
+crabs_bin <- pie_crab %>%
+  mutate(size_binned = case_when(
+    size > 20 ~ "giant",
+    size <= 20 ~ "not giant"
+  ))
+
+sites_binned <-pie_crab %>%
+  mutate(region = case_when(
+    site %in% c("ZI", "CC", "PIE") ~ "Low",
+    site %in% c("BB", "NIB") ~ "Middle",
+    # catch all statement
+    .default = "High"
+  ))
