@@ -1,0 +1,7 @@
+---
+title: "EDS221_day6_tidy_data_session2"
+format: html
+editor: visual
+---
+
+## 
