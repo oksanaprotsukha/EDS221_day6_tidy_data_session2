@@ -56,4 +56,47 @@ exclude_size_13 <- pie_crab %>% filter(site %in% c("NIB", "CC", "ZI") & size >13
 
 # --- Selecting columns --- #
 
+# Select individual columns by name, separate them a comma
+crabs_subset <- pie_crab %>% select(latitude, size, water_temp)
+
+# Select a range of columns using :
+crabs_subset_2 <- pie_crab %>% select(site:air_temp)
+
+# Select a range and an individual column
+crabs_subset_3 <- pie_crab %>% select(date:water_temp, name)
+
+pie_crab %>% select(name, water_temp, size)
+
+# --- Mutate! ---#
+
+# Use dplyr:mutate() to add or update a column, while keeping all existing columns
+
+pie_crab_updated <- pie_crab %>%
+  mutate(size_cm = size/10)
+
+# What happens if I use mutate function to add a new column containing the mean of the size column
+
+pie_crab_mean_updated <- pie_crab %>%
+  mutate(mean = mean(pie_crab$size))
+
+
+# replace a column
+crabs_df_broken <-pie_crab %>%
+  mutate(name = "Teddy is awesome")
+
+
+# group_by function + summarize
+# Group_by site and then find mean by site
+
+mean_size_by_site <- pie_crab %>%
+  group_by(site) %>%
+  summarize(mean_size = mean(size, na.rm = TRUE),
+            sd_size = sd(size, na.rm = TRUE))
+
+# group_by + mutate
+
+pie_crab_group_mutate <- pie_crab %>%
+  group_by(site) %>%
+  mutate(mean_size = mean(size, na.rm = TRUE))
+
 
